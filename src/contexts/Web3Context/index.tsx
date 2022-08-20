@@ -34,6 +34,22 @@ export const Web3ContextProvider: FunctionComponent<{
     }
   }, [provider]);
 
+  const getAuthorizedAccount = useCallback(async () => {
+    if (provider) {
+      try {
+        const accounts = await provider?.send("eth_accounts", []);
+
+        setCurrentAccount(accounts[0]);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }, [provider]);
+
+  useEffect(() => {
+    getAuthorizedAccount();
+  }, [getAuthorizedAccount]);
+
   useEffect(() => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     setProvider(provider);
