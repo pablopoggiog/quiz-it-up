@@ -4,7 +4,7 @@ import { Web3Context } from "src/contexts";
 import Head from "next/head";
 
 const Home: NextPage = () => {
-  const { connectWallet, currentAccount, network, switchNetwork } =
+  const { connectWallet, currentAccount, isRopsten, switchNetwork } =
     useContext(Web3Context);
 
   return (
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {currentAccount ? (
-        network !== "Ropsten" ? (
+        !isRopsten ? (
           <button onClick={switchNetwork}>Switch to Ropsten</button>
         ) : (
           <button>Start</button>

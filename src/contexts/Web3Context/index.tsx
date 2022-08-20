@@ -11,7 +11,7 @@ import { NETWORKS } from "@constants";
 export const Web3Context = createContext({
   currentAccount: "",
   provider: {} as ethers.providers.Web3Provider,
-  network: "",
+  isRopsten: false,
   connectWallet: () => {},
   switchNetwork: () => {}
 });
@@ -22,6 +22,8 @@ export const Web3ContextProvider: FunctionComponent<{
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const [network, setNetwork] = useState<string>("");
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
+
+  const isRopsten = network === NETWORKS[3];
 
   const connectWallet = useCallback(async () => {
     try {
@@ -84,7 +86,7 @@ export const Web3ContextProvider: FunctionComponent<{
       value={{
         currentAccount,
         provider: provider as ethers.providers.Web3Provider,
-        network,
+        isRopsten,
         connectWallet,
         switchNetwork
       }}
