@@ -4,7 +4,8 @@ import { Web3Context } from "src/contexts";
 import Head from "next/head";
 
 const Home: NextPage = () => {
-  const { connectWallet, currentAccount } = useContext(Web3Context);
+  const { connectWallet, currentAccount, network, switchNetwork } =
+    useContext(Web3Context);
 
   return (
     <div>
@@ -16,7 +17,15 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <button onClick={connectWallet}>connect</button>
+      {currentAccount ? (
+        network !== "Ropsten" ? (
+          <button onClick={switchNetwork}>Switch to Ropsten</button>
+        ) : (
+          <button>Start</button>
+        )
+      ) : (
+        <button onClick={connectWallet}>connect</button>
+      )}
     </div>
   );
 };
