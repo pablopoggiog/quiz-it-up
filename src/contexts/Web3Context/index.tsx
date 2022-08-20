@@ -81,6 +81,13 @@ export const Web3ContextProvider: FunctionComponent<{
     setProvider(provider);
   }, []);
 
+  useEffect(() => {
+    const handleAccountOrChainChanged = () => window.location.reload();
+
+    window?.ethereum.on("accountsChanged", handleAccountOrChainChanged);
+    window?.ethereum.on("chainChanged", handleAccountOrChainChanged);
+  }, []);
+
   return (
     <Web3Context.Provider
       value={{
