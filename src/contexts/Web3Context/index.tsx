@@ -6,12 +6,13 @@ import {
   useCallback
 } from "react";
 import { ethers } from "ethers";
-import { NETWORKS } from "@constants";
+import { NETWORKS, QUIZ_CONTRACT_ADDRESS, QUIZ_ABI } from "@constants";
 
 export const Web3Context = createContext({
   currentAccount: "",
   provider: {} as ethers.providers.Web3Provider,
   isRopsten: false,
+  quizBalance: 0,
   connectWallet: () => {},
   switchNetwork: () => {}
 });
@@ -22,6 +23,7 @@ export const Web3ContextProvider: FunctionComponent<{
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const [network, setNetwork] = useState<string>("");
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
+  const [quizBalance, setQuizBalance] = useState<number>(0);
 
   const isRopsten = network === NETWORKS[3];
 
@@ -72,6 +74,25 @@ export const Web3ContextProvider: FunctionComponent<{
     }
   }, [provider]);
 
+  const updateQuizBalance = useCallback(async () => {
+    if (provider && currentAccount) {
+      const contract = new ethers.Contract(
+        QUIZ_CONTRACT_ADDRESS,
+        QUIZ_ABI,
+        provider
+      );
+      const balance = (
+        (await contract.balanceOf(currentAccount)) / 1000000000000000000
+      ).toString();
+
+      setQuizBalance(Number(balance));
+    }
+  }, [currentAccount, provider]);
+
+  useEffect(() => {
+    if (isRopsten) updateQuizBalance();
+  }, [updateQuizBalance, network, isRopsten]);
+
   useEffect(() => {
     getAuthorizedAccount();
   }, [getAuthorizedAccount]);
@@ -94,6 +115,7 @@ export const Web3ContextProvider: FunctionComponent<{
         currentAccount,
         provider: provider as ethers.providers.Web3Provider,
         isRopsten,
+        quizBalance,
         connectWallet,
         switchNetwork
       }}
