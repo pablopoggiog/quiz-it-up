@@ -20,7 +20,8 @@ export const Web3Context = createContext({
   isRopsten: false,
   quizBalance: 0,
   connectWallet: () => {},
-  switchNetwork: () => {}
+  switchNetwork: () => {},
+  submitQuizToContract: (_: number, __: number[]) => {}
 });
 
 interface Props {
@@ -102,6 +103,41 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
     }
   }, [currentAccount, provider]);
 
+  const submitQuizToContract = async (surveyId: number, answers: number[]) => {
+    if (provider && currentAccount) {
+      try {
+        const signer = provider.getSigner(currentAccount);
+        const contract = new ethers.Contract(
+          QUIZ_CONTRACT_ADDRESS,
+          QUIZ_ABI,
+          signer
+        );
+        const transaction = await contract.submit(surveyId, answers);
+        const executedTransaction = await transaction.wait();
+
+        updateQuizBalance();
+
+        console.log(
+          "transaction: ",
+          transaction,
+          "response: ",
+          executedTransaction
+        );
+      } catch (error) {
+        if (
+          //  @ts-ignore
+          error.message.includes(
+            "execution reverted: Cooldown period not finished"
+          )
+        ) {
+          alert("You can only submit one survey per 24hs");
+        }
+
+        console.error(error);
+      }
+    }
+  };
+
   useEffect(() => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -114,7 +150,9 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
   }, [getAuthorizedAccount]);
 
   useEffect(() => {
-    if (isRopsten) updateQuizBalance();
+    if (isRopsten) {
+      updateQuizBalance();
+    }
   }, [updateQuizBalance, network, isRopsten]);
 
   useEffect(() => {
@@ -134,7 +172,8 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
         isRopsten,
         quizBalance,
         connectWallet,
-        switchNetwork
+        switchNetwork,
+        submitQuizToContract
       }}
     >
       {children}

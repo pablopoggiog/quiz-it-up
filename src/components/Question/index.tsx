@@ -26,9 +26,10 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
       if (counter > 0) {
         counter--;
         setTimer(counter);
-        // ff there's no time left, automatically submit an empty answer
+        // if there's no time left, automatically submit an empty answer
         if (counter === 0) {
-          addNewAnswer(null);
+          // I was actually pushing null as empty answer but the contract doesn't allow it, so will push 100 with that meaning of empty answer
+          addNewAnswer(100);
         }
       } else {
         clearInterval(myInterval);

@@ -1,7 +1,7 @@
 import { useQuiz } from "@hooks";
 
 export const Overview = () => {
-  const { questions, answers } = useQuiz();
+  const { questions, answers, submitQuestions } = useQuiz();
 
   return (
     <div>
@@ -14,7 +14,7 @@ export const Overview = () => {
           </p>
         );
       })}
-      <button>Submit</button>
+      <button onClick={submitQuestions}>Submit</button>
     </div>
   );
 };
