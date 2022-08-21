@@ -18,15 +18,16 @@ export const QuizContextProvider: FunctionComponent<{
   const [answers, setAnswers] = useState<(number | null)[]>([]);
   // the only reason to hace a useState for this is to simulate that we just fetched it
   const [questions] = useState<Question[]>(mockedQuiz.questions);
+
   const currentQuestionIndex = answers.length;
-
-  const startQuiz = () => setQuizStarted(true);
-
   const currentQuestion = questions[currentQuestionIndex];
 
+  const startQuiz = () => setQuizStarted(true);
   const addNewAnswer = (answer: number | null) => {
     setAnswers([...answers, answer]);
   };
+
+  console.log(answers)
 
   return (
     <QuizContext.Provider

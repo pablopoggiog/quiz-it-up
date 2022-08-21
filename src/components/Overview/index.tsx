@@ -5,12 +5,12 @@ export const Overview = () => {
 
   return (
     <div>
-      Overview
+      <h3>Overview</h3>
       {answers.map((answer, index) => {
         return (
           <p key={index}>
             {questions[index].text}:{" "}
-            {answer ? questions[index]?.options[answer]?.text : "no response"}
+            {questions[index]?.options[answer as number]?.text ?? "no response"}
           </p>
         );
       })}
