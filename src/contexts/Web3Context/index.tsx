@@ -23,9 +23,11 @@ export const Web3Context = createContext({
   switchNetwork: () => {}
 });
 
-export const Web3ContextProvider: FunctionComponent<{
+interface Props {
   children: React.ReactNode;
-}> = ({ children }) => {
+}
+
+export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState<string>("");
   const [network, setNetwork] = useState<string>("");
   const [provider, setProvider] = useState<ethers.providers.Web3Provider>();
@@ -34,19 +36,19 @@ export const Web3ContextProvider: FunctionComponent<{
   const isRopsten = network === NETWORKS[3];
 
   const connectWallet = useCallback(async () => {
-    try {
-      if (provider) {
+    if (provider) {
+      try {
         const accounts = await provider.send(METHODS.eth_requestAccounts, []);
         setCurrentAccount(accounts[0]);
 
         const network = await provider.getNetwork();
         setNetwork(NETWORKS[network.chainId]);
-      } else {
-        alert("Get MetaMask -> https://metamask.io/");
-        return;
+      } catch (e) {
+        console.log("error", e);
       }
-    } catch (e) {
-      console.log("error", e);
+    } else {
+      alert("Get MetaMask -> https://metamask.io/");
+      return;
     }
   }, [provider]);
 
@@ -101,23 +103,27 @@ export const Web3ContextProvider: FunctionComponent<{
   }, [currentAccount, provider]);
 
   useEffect(() => {
-    if (isRopsten) updateQuizBalance();
-  }, [updateQuizBalance, network, isRopsten]);
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(provider);
+    }
+  }, []);
 
   useEffect(() => {
     getAuthorizedAccount();
   }, [getAuthorizedAccount]);
 
   useEffect(() => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(provider);
-  }, []);
+    if (isRopsten) updateQuizBalance();
+  }, [updateQuizBalance, network, isRopsten]);
 
   useEffect(() => {
-    const handleAccountOrChainChanged = () => window.location.reload();
+    if (window.ethereum) {
+      const handleAccountOrChainChanged = () => window.location.reload();
 
-    window?.ethereum.on(EVENTS.accountsChanged, handleAccountOrChainChanged);
-    window?.ethereum.on(EVENTS.chainChanged, handleAccountOrChainChanged);
+      window.ethereum.on(EVENTS.accountsChanged, handleAccountOrChainChanged);
+      window.ethereum.on(EVENTS.chainChanged, handleAccountOrChainChanged);
+    }
   }, []);
 
   return (

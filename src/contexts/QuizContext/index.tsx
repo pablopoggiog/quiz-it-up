@@ -27,8 +27,6 @@ export const QuizContextProvider: FunctionComponent<{
     setAnswers([...answers, answer]);
   };
 
-  console.log(answers)
-
   return (
     <QuizContext.Provider
       value={{

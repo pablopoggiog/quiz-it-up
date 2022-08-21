@@ -13,15 +13,16 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
 
   const { answers, addNewAnswer } = useQuiz();
 
+  // every time we submit a new answer, reset the timer
   useEffect(() => {
     answers.length && setTimer(lifetimeSeconds);
   }, [answers.length, lifetimeSeconds]);
 
+  // every second, decrement the timer
   useEffect(() => {
     let counter = lifetimeSeconds;
-    let myInterval: NodeJS.Timer;
 
-    myInterval = setInterval(() => {
+    const myInterval = setInterval(() => {
       if (counter > 0) {
         counter--;
         setTimer(counter);
