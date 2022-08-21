@@ -2,12 +2,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useContext } from "react";
 import { Web3Context, QuizContext } from "src/contexts";
-import { Question } from "@components";
+import { Question, Overview } from "@components";
 import { mockedQuiz } from "@utils";
 
 const Home: NextPage = () => {
-  const { currentQuestion, quizStarted, startQuiz } =
-    useContext(QuizContext);
+  const { currentQuestion, quizStarted, startQuiz } = useContext(QuizContext);
   const {
     currentAccount,
     isRopsten,
@@ -39,7 +38,7 @@ const Home: NextPage = () => {
                 currentQuestion ? (
                   <Question question={currentQuestion} />
                 ) : (
-                  <p>Overview</p>
+                  <Overview />
                 )
               ) : (
                 <button onClick={startQuiz}>Start</button>
