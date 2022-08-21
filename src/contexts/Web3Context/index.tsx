@@ -6,7 +6,13 @@ import {
   useCallback
 } from "react";
 import { ethers } from "ethers";
-import { NETWORKS, QUIZ_CONTRACT_ADDRESS, QUIZ_ABI } from "@constants";
+import {
+  NETWORKS,
+  QUIZ_CONTRACT_ADDRESS,
+  QUIZ_ABI,
+  METHODS,
+  EVENTS
+} from "@constants";
 
 export const Web3Context = createContext({
   currentAccount: "",
@@ -30,7 +36,7 @@ export const Web3ContextProvider: FunctionComponent<{
   const connectWallet = useCallback(async () => {
     try {
       if (provider) {
-        const accounts = await provider.send("eth_requestAccounts", []);
+        const accounts = await provider.send(METHODS.eth_requestAccounts, []);
         setCurrentAccount(accounts[0]);
 
         const network = await provider.getNetwork();
@@ -47,7 +53,7 @@ export const Web3ContextProvider: FunctionComponent<{
   const getAuthorizedAccount = useCallback(async () => {
     if (provider) {
       try {
-        const accounts = await provider?.send("eth_accounts", []);
+        const accounts = await provider?.send(METHODS.eth_accounts, []);
         setCurrentAccount(accounts[0]);
 
         const network = await provider.getNetwork();
@@ -60,13 +66,17 @@ export const Web3ContextProvider: FunctionComponent<{
 
   const switchNetwork = useCallback(async () => {
     try {
-      await provider?.send("wallet_switchEthereumChain", [{ chainId: "0x3" }]);
+      await provider?.send(METHODS.wallet_switchEthereumChain, [
+        { chainId: "0x3" }
+      ]);
     } catch (error) {
       // if the chain wasn't added yet to Metamask, add it
       //  @ts-ignore
       if (error?.code === 4902) {
         try {
-          await provider?.send("wallet_addEthereumChain", [{ chainId: "0x3" }]);
+          await provider?.send(METHODS.wallet_addEthereumChain, [
+            { chainId: "0x3" }
+          ]);
         } catch (error) {
           console.error(error);
         }
@@ -106,8 +116,8 @@ export const Web3ContextProvider: FunctionComponent<{
   useEffect(() => {
     const handleAccountOrChainChanged = () => window.location.reload();
 
-    window?.ethereum.on("accountsChanged", handleAccountOrChainChanged);
-    window?.ethereum.on("chainChanged", handleAccountOrChainChanged);
+    window?.ethereum.on(EVENTS.accountsChanged, handleAccountOrChainChanged);
+    window?.ethereum.on(EVENTS.chainChanged, handleAccountOrChainChanged);
   }, []);
 
   return (

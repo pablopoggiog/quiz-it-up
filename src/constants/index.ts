@@ -13,6 +13,18 @@ export const NETWORKS: Record<number, string> = {
   80001: "Polygon Mumbai Testnet"
 };
 
+export const METHODS = {
+  eth_accounts: "eth_accounts",
+  eth_requestAccounts: "eth_requestAccounts",
+  wallet_switchEthereumChain: "wallet_switchEthereumChain",
+  wallet_addEthereumChain: "wallet_addEthereumChain"
+};
+
+export const EVENTS = {
+  chainChanged: "chainChanged",
+  accountsChanged: "accountsChanged"
+};
+
 export const QUIZ_ABI = [
   {
     inputs: [
