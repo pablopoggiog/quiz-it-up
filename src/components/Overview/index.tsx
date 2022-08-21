@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { QuizContext } from "@contexts";
+import { useQuiz } from "@hooks";
 
 export const Overview = () => {
-  const { questions, answers } = useContext(QuizContext);
+  const { questions, answers } = useQuiz();
 
   return (
     <div>

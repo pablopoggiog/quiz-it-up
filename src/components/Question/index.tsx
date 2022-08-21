@@ -1,12 +1,5 @@
-import {
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-  Fragment,
-  FunctionComponent
-} from "react";
-import { QuizContext } from "@contexts";
+import { useEffect, useState, Fragment, FunctionComponent } from "react";
+import { useQuiz } from "@hooks";
 import { Question as QuestionType } from "@types";
 
 interface Props {
@@ -18,14 +11,7 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
 
   const [timer, setTimer] = useState<number>(lifetimeSeconds);
 
-  const { answers, addNewAnswer } = useContext(QuizContext);
-
-  const sumbitAnswer = useCallback(
-    (option: number | null) => {
-      addNewAnswer(option);
-    },
-    [addNewAnswer]
-  );
+  const { answers, addNewAnswer } = useQuiz();
 
   useEffect(() => {
     answers.length && setTimer(lifetimeSeconds);
@@ -36,33 +22,33 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
     let myInterval: NodeJS.Timer;
 
     myInterval = setInterval(() => {
-      // setTimer(lifetimeSeconds);
       if (counter > 0) {
         counter--;
         setTimer(counter);
-        // If there's no time left, automatically submit an empty answer
+        // ff there's no time left, automatically submit an empty answer
         if (counter === 0) {
-          sumbitAnswer(null);
+          addNewAnswer(null);
         }
       } else {
         clearInterval(myInterval);
       }
     }, 1000);
 
-    return () => clearInterval(myInterval);
-  }, [lifetimeSeconds, sumbitAnswer]);
+    const cleanup = () => clearInterval(myInterval);
+    return cleanup;
+  }, [lifetimeSeconds, addNewAnswer]);
 
   return (
     <div>
       <p>{timer}</p>
       <p>{text}</p>
-      {options?.map(({ text }: any, index: number) => (
+      {options?.map(({ text }, index) => (
         <Fragment key={index}>
           <span>{text}</span>
           <input
             key={index}
             type="checkbox"
-            onChange={() => sumbitAnswer(index)}
+            onChange={() => addNewAnswer(index)}
             checked={false}
           />
         </Fragment>

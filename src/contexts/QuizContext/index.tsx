@@ -1,10 +1,4 @@
-import {
-  FunctionComponent,
-  createContext,
-  useState,
-  useEffect,
-  useCallback
-} from "react";
+import { FunctionComponent, createContext, useState } from "react";
 import { mockedQuiz } from "@utils";
 import { Question } from "@types";
 
@@ -22,7 +16,8 @@ export const QuizContextProvider: FunctionComponent<{
 }> = ({ children }) => {
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
   const [answers, setAnswers] = useState<(number | null)[]>([]);
-  const [questions, setQuestion] = useState<Question[]>(mockedQuiz.questions);
+  // the only reason to hace a useState for this is to simulate that we just fetched it
+  const [questions] = useState<Question[]>(mockedQuiz.questions);
   const currentQuestionIndex = answers.length;
 
   const startQuiz = () => setQuizStarted(true);

@@ -1,19 +1,18 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useContext } from "react";
-import { Web3Context, QuizContext } from "src/contexts";
+import { useWeb3, useQuiz } from "src/hooks";
 import { Question, Overview } from "@components";
 import { mockedQuiz } from "@utils";
 
 const Home: NextPage = () => {
-  const { currentQuestion, quizStarted, startQuiz } = useContext(QuizContext);
+  const { currentQuestion, quizStarted, startQuiz } = useQuiz();
   const {
     currentAccount,
     isRopsten,
     quizBalance,
     connectWallet,
     switchNetwork
-  } = useContext(Web3Context);
+  } = useWeb3();
 
   return (
     <div>
