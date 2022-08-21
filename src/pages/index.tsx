@@ -1,9 +1,13 @@
 import type { NextPage } from "next";
-import { useContext } from "react";
-import { Web3Context } from "src/contexts";
 import Head from "next/head";
+import { useContext } from "react";
+import { Web3Context, QuizContext } from "src/contexts";
+import { Question } from "@components";
+import { mockedQuiz } from "@utils";
 
 const Home: NextPage = () => {
+  const { currentQuestion, quizStarted, startQuiz } =
+    useContext(QuizContext);
   const {
     currentAccount,
     isRopsten,
@@ -22,13 +26,25 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       {currentAccount ? (
         <>
           <p>QUIZ: {quizBalance}</p>
           {!isRopsten ? (
             <button onClick={switchNetwork}>Switch to Ropsten</button>
           ) : (
-            <button>Start</button>
+            <>
+              <h2>{mockedQuiz.title}</h2>
+              {quizStarted ? (
+                currentQuestion ? (
+                  <Question question={currentQuestion} />
+                ) : (
+                  <p>Overview</p>
+                )
+              ) : (
+                <button onClick={startQuiz}>Start</button>
+              )}
+            </>
           )}
         </>
       ) : (

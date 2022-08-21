@@ -61,9 +61,10 @@ export const Web3ContextProvider: FunctionComponent<{
   const switchNetwork = useCallback(async () => {
     try {
       await provider?.send("wallet_switchEthereumChain", [{ chainId: "0x3" }]);
-    } catch (error: any) {
+    } catch (error) {
       // if the chain wasn't added yet to Metamask, add it
-      if (error.code === 4902) {
+      //  @ts-ignore
+      if (error?.code === 4902) {
         try {
           await provider?.send("wallet_addEthereumChain", [{ chainId: "0x3" }]);
         } catch (error) {

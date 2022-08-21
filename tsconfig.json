@@ -18,6 +18,10 @@
     "paths": {
       "@pages": ["src/pages"],
       "@constants": ["src/constants"],
+      "@contexts": ["src/contexts"],
+      "@utils": ["src/utils"],
+      "@types": ["src/types"],
+      "@components": ["src/components"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

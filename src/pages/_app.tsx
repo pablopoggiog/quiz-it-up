@@ -1,9 +1,11 @@
 import type { AppProps } from "next/app";
-import { Web3ContextProvider } from "src/contexts";
+import { Web3ContextProvider, QuizContextProvider } from "@contexts";
 
 const App = ({ Component, pageProps }: AppProps) => (
   <Web3ContextProvider>
-    <Component {...pageProps} />
+    <QuizContextProvider>
+      <Component {...pageProps} />
+    </QuizContextProvider>
   </Web3ContextProvider>
 );
 
