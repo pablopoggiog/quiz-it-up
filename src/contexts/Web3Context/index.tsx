@@ -13,6 +13,7 @@ import {
   METHODS,
   EVENTS
 } from "@constants";
+import { SubmitQuizReturn } from "@types";
 
 export const Web3Context = createContext({
   currentAccount: "",
@@ -21,7 +22,7 @@ export const Web3Context = createContext({
   quizBalance: 0,
   connectWallet: () => {},
   switchNetwork: () => {},
-  submitQuizToContract: (_: number, __: number[]) => {}
+  submitQuizToContract: (_: number, __: number[]) => ({} as SubmitQuizReturn)
 });
 
 interface Props {
@@ -103,7 +104,10 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
     }
   }, [currentAccount, provider]);
 
-  const submitQuizToContract = async (surveyId: number, answers: number[]) => {
+  const submitQuizToContract = async (
+    surveyId: number,
+    answers: number[]
+  ): Promise<[string | undefined, unknown | undefined] | undefined> => {
     if (provider && currentAccount) {
       try {
         const signer = provider.getSigner(currentAccount);
@@ -112,28 +116,23 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
           QUIZ_ABI,
           signer
         );
-        const transaction = await contract.submit(surveyId, answers);
-        const executedTransaction = await transaction.wait();
+        const transactionInProgress = await contract.submit(surveyId, answers);
+        const { transactionHash }: { transactionHash: string } =
+          await transactionInProgress.wait();
 
         updateQuizBalance();
 
         console.log(
-          "transaction: ",
-          transaction,
-          "response: ",
-          executedTransaction
+          "transactionInProgress: ",
+          transactionInProgress,
+          "executedTransaction: ",
+          transactionHash
         );
-      } catch (error) {
-        if (
-          //  @ts-ignore
-          error.message.includes(
-            "execution reverted: Cooldown period not finished"
-          )
-        ) {
-          alert("You can only submit one survey per 24hs");
-        }
 
-        console.error(error);
+        return [transactionHash, undefined];
+      } catch (error) {
+        //@ts-ignore
+        return [undefined, error.message];
       }
     }
   };

@@ -1,7 +1,7 @@
 import { FunctionComponent, createContext, useState } from "react";
 import { useWeb3 } from "src/hooks";
 import { mockedQuiz } from "@utils";
-import { Question } from "@types";
+import { Question, SubmitQuizReturn } from "@types";
 
 export const QuizContext = createContext({
   questions: [] as Question[],
@@ -10,7 +10,7 @@ export const QuizContext = createContext({
   addNewAnswer: (_: number) => {},
   quizStarted: false,
   startQuiz: () => {},
-  submitQuestions: () => {}
+  submitQuestions: () => ({} as SubmitQuizReturn)
 });
 
 export const QuizContextProvider: FunctionComponent<{
@@ -32,11 +32,8 @@ export const QuizContextProvider: FunctionComponent<{
     setAnswers([...answers, answer]);
   };
   const submitQuestions = () => {
-    try {
-      submitQuizToContract(surveyId, answers);
-    } catch (error) {
-      console.error(error);
-    }
+    const result = submitQuizToContract(surveyId, answers);
+    return result;
   };
 
   return (

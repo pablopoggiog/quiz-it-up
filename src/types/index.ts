@@ -12,3 +12,7 @@ declare global {
 }
 
 export type Question = typeof mockedQuiz.questions[0];
+
+export type SubmitQuizReturn = Promise<
+  [string | undefined, unknown | undefined] | undefined
+>;
