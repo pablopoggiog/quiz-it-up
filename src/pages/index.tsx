@@ -47,14 +47,12 @@ const Home: NextPage = () => {
 
       <VStack p={4} gap={20} minH="100vh" {...backgroundProps} color="white">
         {!currentAccount ? (
-          <Button bgColor="whiteAlpha.200" onClick={connectWallet}>
-            Connect wallet
-          </Button>
+          <Button onClick={connectWallet}>Connect wallet</Button>
         ) : (
           <>
             <Text
               p={2}
-              bg="text.bg"
+              bg="whiteAlpha.200"
               alignSelf="flex-start"
               rounded="lg"
               fontWeight="bold"
@@ -63,9 +61,7 @@ const Home: NextPage = () => {
             </Text>
 
             {!isRopsten ? (
-              <Button bgColor="whiteAlpha.200" onClick={switchNetwork}>
-                Switch to Ropsten
-              </Button>
+              <Button onClick={switchNetwork}>Switch to Ropsten</Button>
             ) : (
               <VStack h="full" w="full" justify="space-between" gap={10}>
                 <Text as="h1" fontSize="3xl" fontWeight="bold">
@@ -79,9 +75,7 @@ const Home: NextPage = () => {
                 />
 
                 {!quizStarted ? (
-                  <Button bgColor="whiteAlpha.200" onClick={startQuiz}>
-                    Start
-                  </Button>
+                  <Button onClick={startQuiz}>Start</Button>
                 ) : currentQuestion ? (
                   <Question question={currentQuestion} />
                 ) : (

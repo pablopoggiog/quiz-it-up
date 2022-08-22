@@ -12,5 +12,15 @@ const shadows = { "dark-lg": "0 8px 32px rgba(0, 0, 0, 0.36)" };
 
 export const theme = extendTheme({
   colors,
-  shadows
+  shadows,
+  components: {
+    Button: {
+      baseStyle: {
+        bgColor: "whiteAlpha.200 !important",
+        _hover: {
+          bgColor: "whiteAlpha.300 !important"
+        }
+      }
+    }
+  }
 });

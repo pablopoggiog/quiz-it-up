@@ -47,7 +47,7 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
     <VStack
       p={10}
       gap={[5, 10]}
-      shadow="0 8px 32px rgba(0, 0, 0, 0.36)"
+      shadow="dark-lg"
       rounded="lg"
       w={["full", "fit-content"]}
       minW="40%"

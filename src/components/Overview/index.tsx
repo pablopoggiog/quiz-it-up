@@ -64,14 +64,12 @@ export const Overview = () => {
             <Text>{quiz.questions[index].text}:</Text>
             <Text>
               {quiz.questions[index]?.options[answer as number]?.text ??
-                "no response"}
+                "No response"}
             </Text>
           </Flex>
         ))}
       </VStack>
-      <Button bgColor="whiteAlpha.200" onClick={submit}>
-        Submit
-      </Button>
+      <Button onClick={submit}>Submit</Button>
       <TransactionModal
         isOpen={modalIsOpen}
         onClose={onClose}
