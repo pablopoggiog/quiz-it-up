@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState, FunctionComponent } from "react";
-import { VStack, Text, Flex, HStack, Checkbox } from "@chakra-ui/react";
+import { VStack, Text, Flex, Progress, Checkbox } from "@chakra-ui/react";
 import { useQuiz } from "@hooks";
 import { Question as QuestionType } from "@types";
 import TimerIcon from "src/assets/timer.svg";
@@ -14,7 +14,7 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
 
   const [timer, setTimer] = useState<number>(lifetimeSeconds);
 
-  const { answers, addNewAnswer } = useQuiz();
+  const { quiz, answers, addNewAnswer } = useQuiz();
 
   // every time we submit a new answer, reset the timer
   useEffect(() => {
@@ -43,6 +43,10 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
     return cleanup;
   }, [lifetimeSeconds, addNewAnswer]);
 
+  const progress = Math.floor(
+    ((answers.length + 1) * 100) / quiz.questions.length
+  );
+
   return (
     <VStack
       p={10}
@@ -53,6 +57,7 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
       minW="40%"
       bgColor="card.bg"
     >
+      <Progress value={progress} w="full" rounded="lg" />
       <Flex gap={4} alignSelf="flex-start">
         <Image width={20} height={20} src={TimerIcon} alt="Timer icon" />
         <Text as="span" fontWeight="bold">
