@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Welcome to Quiz It Up
 
-## Getting Started
+## Summary
+
+Here, you'll be able to:
+
+- See your balance of QUIZ in Ropsten.
+- Connect your Metamask wallet to interact with the dApp. If Metamask is not installed, there will be a message encouraging the user to install it.
+- Move to the Ropsten network just clicking a button, if the current network on Metamask is another one.
+- Answer the daily trivia, where each question will be available for a limited amount of seconds and, answered or not, it'll move to the next question.
+- See an overview with all the answers, once all the questions are finished.
+- Submit the questions to the validator contract. 
+
+## Getting started
+
+To run the app, you'll have 2 options:
+
+1. Go to the [deployed app](https://quiz-it-up.vercel.app/), this is by far the simplest and fastest option!
+2. Run the app locally.
+
+
+### Run the app locally
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Flow
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. When initializing the app, it'll automatically check whether there's a wallet connected or not. In the latter case, there will be a button to connect one.
+2. Once there's an account connected, it'll also check whether the network is Ropsten. In the case Metamask is set to a different network, there will be also a button to easily change to Ropsten.
+3. If there's an account and the network is correct, the balance of the QUIZ token for that account will be displayed on the top-left corner.
+3. There will also show up the title and image of the daily trivia, with a button to start answering it.
+4. Clicking on it, the questions of the trivia will start showing up on the screen and the timer will start counting down for each question. Answer each question before the timer reaches 0, or the anser will be marked as "No response" and it'll move to the next question.
+5. Once all the questions are responded, you'll see an Overview panel showing all the questions an answers.
+6. Click on the Submit button. This, in addition to make Metamask prompt to complete the transaction, will also open a modal with the status of the transaction. In case of error, the error will be displayed in the modal. In case of success, it'll display a link to verify the transaction in Etherscan and will automatically update the balance of QUIZ.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Desktop
 
-## Learn More
+https://user-images.githubusercontent.com/52573144/186002716-a1e9ae32-3b9b-4fb0-80d8-48c2fb35cb95.mov
 
-To learn more about Next.js, take a look at the following resources:
+### Mobile
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+https://user-images.githubusercontent.com/52573144/186003132-220ce1d5-a466-4399-af43-c4a3cd4d234d.mov
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Thank you for making it this far!
+If you have suggestions, feel free to open an issue or PR and I'll be glad to review it.
