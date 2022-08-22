@@ -25,6 +25,8 @@ export const EVENTS = {
   accountsChanged: "accountsChanged"
 };
 
+export const ROPSTEN_ETHERSCAN_URL = "https://ropsten.etherscan.io/tx/";
+
 export const QUIZ_ABI = [
   {
     inputs: [

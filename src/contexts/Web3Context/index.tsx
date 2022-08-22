@@ -45,8 +45,8 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
 
         const network = await provider.getNetwork();
         setNetwork(NETWORKS[network.chainId]);
-      } catch (e) {
-        console.log("error", e);
+      } catch (error) {
+        console.error(error);
       }
     } else {
       alert("Get MetaMask -> https://metamask.io/");
@@ -121,13 +121,6 @@ export const Web3ContextProvider: FunctionComponent<Props> = ({ children }) => {
           await transactionInProgress.wait();
 
         updateQuizBalance();
-
-        console.log(
-          "transactionInProgress: ",
-          transactionInProgress,
-          "executedTransaction: ",
-          transactionHash
-        );
 
         return [transactionHash, undefined];
       } catch (error) {

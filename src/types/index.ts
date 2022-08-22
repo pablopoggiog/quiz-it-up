@@ -11,6 +11,8 @@ declare global {
   }
 }
 
+export type Quiz = typeof mockedQuiz;
+
 export type Question = typeof mockedQuiz.questions[0];
 
 export type SubmitQuizReturn = Promise<

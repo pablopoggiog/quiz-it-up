@@ -1,54 +1,83 @@
 import { useState } from "react";
-import { TransactionModal } from "src/components";
+import { Flex, Text, Button, VStack } from "@chakra-ui/react";
+import { TransactionModal } from "@components";
 import { useQuiz } from "@hooks";
 
 export const Overview = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [transactionHash, setTransactionHash] = useState<string>("");
-  const { questions, answers, submitQuestions } = useQuiz();
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { quiz, answers, submitQuestions } = useQuiz();
 
-  const closeModal = () => setModalIsOpen(false);
   const submit = async () => {
     setModalIsOpen(true);
-    try {
-      const response = await submitQuestions();
-      if (response) {
-        const [transactionHash, error] = response;
-        if (transactionHash) {
-          setTransactionHash(transactionHash);
-        } else {
-          const errorMessage = (error as string).includes(
-            "execution reverted: Cooldown period not finished"
-          )
-            ? "You can only submit one survey every 24hs"
-            : error;
 
-          closeModal();
-          alert("Error: " + errorMessage);
-        }
+    const response = await submitQuestions();
+    if (response) {
+      const [transactionHash, error] = response;
+      if (transactionHash) {
+        setTransactionHash(transactionHash);
+      } else {
+        const errorMessage = (error as string).includes(
+          "execution reverted: Cooldown period not finished"
+        )
+          ? "You can only submit one survey every 24hs"
+          : (error as string).includes("user rejected transaction")
+          ? "User rejected transaction"
+          : error;
+
+        setErrorMessage(errorMessage as string);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
 
+  const onClose = () => {
+    setModalIsOpen(false);
+    setTransactionHash("");
+    setErrorMessage("");
+  };
+
   return (
-    <div>
-      <h3>Overview</h3>
-      {answers.map((answer, index) => {
-        return (
-          <p key={index}>
-            {questions[index].text}:{" "}
-            {questions[index]?.options[answer as number]?.text ?? "no response"}
-          </p>
-        );
-      })}
-      <button onClick={submit}>Submit</button>
+    <VStack
+      p={10}
+      gap={[5, 10]}
+      shadow="dark-lg"
+      rounded="lg"
+      fontWeight="bold"
+      w={["full", "fit-content"]}
+      minW="40%"
+      bgColor="card.bg"
+    >
+      <Text as="h3">Overview</Text>
+
+      <VStack w="full" gap={5} px={4}>
+        {answers.map((answer, index) => (
+          <Flex
+            key={index}
+            w="full"
+            justify="space-between"
+            gap={4}
+            rounded="lg"
+            bgColor="card.bg"
+            p={4}
+          >
+            <Text>{quiz.questions[index].text}:</Text>
+            <Text>
+              {quiz.questions[index]?.options[answer as number]?.text ??
+                "no response"}
+            </Text>
+          </Flex>
+        ))}
+      </VStack>
+      <Button bgColor="whiteAlpha.200" onClick={submit}>
+        Submit
+      </Button>
       <TransactionModal
         isOpen={modalIsOpen}
-        onClose={closeModal}
+        onClose={onClose}
         transactionHash={transactionHash}
+        errorMessage={errorMessage}
       />
-    </div>
+    </VStack>
   );
 };

@@ -1,13 +1,16 @@
-import { useEffect, useState, Fragment, FunctionComponent } from "react";
+import Image from "next/image";
+import { useEffect, useState, FunctionComponent } from "react";
+import { VStack, Text, Flex, HStack, Checkbox } from "@chakra-ui/react";
 import { useQuiz } from "@hooks";
 import { Question as QuestionType } from "@types";
+import TimerIcon from "src/assets/timer.svg";
 
 interface Props {
   question: QuestionType;
 }
 
 export const Question: FunctionComponent<Props> = ({ question }) => {
-  const { lifetimeSeconds, image, text, options } = question;
+  const { lifetimeSeconds, text, options } = question;
 
   const [timer, setTimer] = useState<number>(lifetimeSeconds);
 
@@ -41,20 +44,44 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
   }, [lifetimeSeconds, addNewAnswer]);
 
   return (
-    <div>
-      <p>{timer}</p>
-      <p>{text}</p>
-      {options?.map(({ text }, index) => (
-        <Fragment key={index}>
-          <span>{text}</span>
-          <input
+    <VStack
+      p={10}
+      gap={[5, 10]}
+      shadow="0 8px 32px rgba(0, 0, 0, 0.36)"
+      rounded="lg"
+      w={["full", "fit-content"]}
+      minW="40%"
+      bgColor="card.bg"
+    >
+      <Flex gap={4} alignSelf="flex-start">
+        <Image width={20} height={20} src={TimerIcon} alt="Timer icon" />
+        <Text as="span" fontWeight="bold">
+          {timer}&quot;
+        </Text>
+      </Flex>
+      <Text fontWeight="bold" fontSize="xl">
+        {text}
+      </Text>
+      <Flex
+        w="full"
+        gap={5}
+        direction={["column", "row"]}
+        justify="space-between"
+      >
+        {options?.map(({ text }, index) => (
+          <Flex
             key={index}
-            type="checkbox"
-            onChange={() => addNewAnswer(index)}
-            checked={false}
-          />
-        </Fragment>
-      ))}
-    </div>
+            gap={4}
+            justify="space-between"
+            rounded="lg"
+            bgColor="card.bg"
+            p={4}
+          >
+            <Text>{text}</Text>
+            <Checkbox onChange={() => addNewAnswer(index)} isChecked={false} />
+          </Flex>
+        ))}
+      </Flex>
+    </VStack>
   );
 };

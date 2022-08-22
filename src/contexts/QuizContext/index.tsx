@@ -1,10 +1,10 @@
 import { FunctionComponent, createContext, useState } from "react";
-import { useWeb3 } from "src/hooks";
+import { useWeb3 } from "@hooks";
 import { mockedQuiz } from "@utils";
-import { Question, SubmitQuizReturn } from "@types";
+import { Quiz, Question, SubmitQuizReturn } from "@types";
 
 export const QuizContext = createContext({
-  questions: [] as Question[],
+  quiz: {} as Quiz,
   currentQuestion: {} as Question,
   answers: [] as number[],
   addNewAnswer: (_: number) => {},
@@ -20,12 +20,12 @@ export const QuizContextProvider: FunctionComponent<{
   const [quizStarted, setQuizStarted] = useState<boolean>(false);
   const [answers, setAnswers] = useState<number[]>([]);
   // the only reason to hace a useState for this is to simulate that we just fetched it
-  const [questions] = useState<Question[]>(mockedQuiz.questions);
+  const [quiz] = useState<Quiz>(mockedQuiz);
 
   const { submitQuizToContract } = useWeb3();
 
   const currentQuestionIndex = answers.length;
-  const currentQuestion = questions[currentQuestionIndex];
+  const currentQuestion = quiz.questions[currentQuestionIndex];
 
   const startQuiz = () => setQuizStarted(true);
   const addNewAnswer = (answer: number) => {
@@ -39,7 +39,7 @@ export const QuizContextProvider: FunctionComponent<{
   return (
     <QuizContext.Provider
       value={{
-        questions,
+        quiz,
         currentQuestion,
         answers,
         addNewAnswer,

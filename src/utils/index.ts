@@ -16,7 +16,7 @@ export const mockedQuiz = {
           text: "Opt2"
         },
         {
-          text: "Opt3"
+          text: "Opt"
         }
       ]
     },
@@ -27,30 +27,30 @@ export const mockedQuiz = {
       lifetimeSeconds: 5,
       options: [
         {
-          text: "Opt234"
+          text: "Opt1"
         },
         {
-          text: "Opt434"
+          text: "Opt2"
         },
         {
-          text: "Opt4234"
+          text: "Opt"
         }
       ]
     },
     {
-      text: "Question3",
+      text: "Pregunta 2",
       image:
         "https://filedn.com/ltOdFv1aqz1YIFhf4gTY8D7/ingus-info/BLOGS/Photography-stocks3/stock-photography-slider.jpg",
       lifetimeSeconds: 5,
       options: [
         {
-          text: "Opt768"
+          text: "Opt1"
         },
         {
-          text: "Opt678"
+          text: "Opt2"
         },
         {
-          text: "Opt8"
+          text: "Opt"
         }
       ]
     }
