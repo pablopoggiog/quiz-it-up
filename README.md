@@ -35,17 +35,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 2. Once there's an account connected, it'll also check whether the network is Ropsten. In the case Metamask is set to a different network, there will be also a button to easily change to Ropsten.
 3. If there's an account and the network is correct, the balance of the QUIZ token for that account will be displayed on the top-left corner.
 3. There will also show up the title and image of the daily trivia, with a button to start answering it.
-4. Clicking on it, the questions of the trivia will start showing up on the screen and the timer will start counting down for each question. Answer each question before the timer reaches 0, or the anser will be marked as "No response" and it'll move to the next question.
+4. Clicking on it, the questions of the trivia will start showing up on the screen and the timer will start counting down for each question. Answer each question before the timer reaches 0, or the anser will be marked as "No response" and it'll move to the next question. You'll also notice a bar displaying the progress along the quiz.
 5. Once all the questions are responded, you'll see an Overview panel showing all the questions an answers.
 6. Click on the Submit button. This, in addition to make Metamask prompt to complete the transaction, will also open a modal with the status of the transaction. In case of error, the error will be displayed in the modal. In case of success, it'll display a link to verify the transaction in Etherscan and will automatically update the balance of QUIZ.
 
 ### Desktop
 
-https://user-images.githubusercontent.com/52573144/186002716-a1e9ae32-3b9b-4fb0-80d8-48c2fb35cb95.mov
+https://user-images.githubusercontent.com/52573144/186010196-c9978710-3c31-40d4-9cf0-dceb2a72e5eb.mov
 
 ### Mobile
 
-https://user-images.githubusercontent.com/52573144/186003132-220ce1d5-a466-4399-af43-c4a3cd4d234d.mov
+https://user-images.githubusercontent.com/52573144/186010025-1cd62c50-0ca4-47d5-9a91-e71755851608.mov
 
 ### Thank you for making it this far!
 If you have suggestions, feel free to open an issue or PR and I'll be glad to review it.
