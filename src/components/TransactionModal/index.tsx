@@ -33,8 +33,17 @@ export const TransactionModal: FunctionComponent<Props> = ({
     onCloseComplete={onClose}
   >
     <ModalOverlay />
-    <ModalContent w="fit" p={6} maxW="90%" textAlign="center">
-      {(transactionHash || errorMessage) && <ModalCloseButton />}
+    <ModalContent
+      w="fit"
+      p={6}
+      maxW="90%"
+      textAlign="center"
+      bgColor="gray.700"
+      color="whiteAlpha.900"
+    >
+      {(transactionHash || errorMessage) && (
+        <ModalCloseButton color="whiteAlpha" />
+      )}
       <ModalBody pt={5}>
         {errorMessage ? (
           <Text>{errorMessage}</Text>
@@ -55,7 +64,7 @@ export const TransactionModal: FunctionComponent<Props> = ({
         ) : (
           <VStack justify="space-evenly" h="full" gap={2}>
             <Text>Transaction In Progress!</Text>
-            <Spinner />
+            <Spinner color="whiteAlpha.900" />
           </VStack>
         )}
       </ModalBody>
