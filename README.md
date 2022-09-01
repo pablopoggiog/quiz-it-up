@@ -1,8 +1,8 @@
-# Welcome to Quiz It Up
+# Quiz It Up
 
 ## Summary
 
-Here, you'll be able to:
+Here you'll be able to:
 
 - See your balance of QUIZ in Ropsten.
 - Connect your Metamask wallet to interact with the dApp. If Metamask is not installed, there will be a message encouraging the user to install it.
@@ -15,16 +15,16 @@ Here, you'll be able to:
 
 To run the app, you'll have 2 options:
 
-1. Go to the [deployed app](https://quiz-it-up.vercel.app/), this is by far the simplest and fastest option!
+1. Go to the [deployed app](https://quiz-it-up.vercel.app/) (the simplest and fastest option!).
 2. Run the app locally.
 
 
 ### Run the app locally
 
-First, run the development server:
+First, install deps and run the development server:
 
 ```bash
-yarn dev
+yarn && yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -41,11 +41,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Desktop
 
-https://user-images.githubusercontent.com/52573144/186010196-c9978710-3c31-40d4-9cf0-dceb2a72e5eb.mov
+https://user-images.githubusercontent.com/52573144/187835686-b614b9c3-66ea-408e-a1b1-78c67c23cc97.mov
 
 ### Mobile
 
-https://user-images.githubusercontent.com/52573144/186010025-1cd62c50-0ca4-47d5-9a91-e71755851608.mov
+https://user-images.githubusercontent.com/52573144/187835416-34ed8da5-f9df-493c-8bd5-b2d42a996776.mov
 
-### Thank you for making it this far!
+### o/
 If you have suggestions, feel free to open an issue or PR and I'll be glad to review it.
