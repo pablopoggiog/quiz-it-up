@@ -10,7 +10,10 @@ import {
   Spinner,
   Link
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { ROPSTEN_ETHERSCAN_URL } from "@constants";
+
+const AnimatedModalContent = motion(ModalContent);
 
 interface Props {
   isOpen: boolean;
@@ -33,7 +36,10 @@ export const TransactionModal: FunctionComponent<Props> = ({
     onCloseComplete={onClose}
   >
     <ModalOverlay />
-    <ModalContent
+    <AnimatedModalContent
+      initial={{ opacity: 0, y: -1000 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 200 }}
       w="fit"
       p={6}
       maxW="90%"
@@ -68,6 +74,6 @@ export const TransactionModal: FunctionComponent<Props> = ({
           </VStack>
         )}
       </ModalBody>
-    </ModalContent>
+    </AnimatedModalContent>
   </Modal>
 );

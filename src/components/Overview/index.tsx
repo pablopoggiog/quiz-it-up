@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { Flex, Text, Button, VStack } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { TransactionModal } from "@components";
 import { useQuiz } from "@hooks";
+
+const AnimatedVstack = motion(VStack);
 
 export const Overview = () => {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -38,7 +41,10 @@ export const Overview = () => {
   };
 
   return (
-    <VStack
+    <AnimatedVstack
+      initial={{ opacity: 0, y: -200 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 200 }}
       p={10}
       gap={[5, 10]}
       shadow="dark-lg"
@@ -76,6 +82,6 @@ export const Overview = () => {
         transactionHash={transactionHash}
         errorMessage={errorMessage}
       />
-    </VStack>
+    </AnimatedVstack>
   );
 };

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState, FunctionComponent } from "react";
 import { VStack, Text, Flex, Progress, Checkbox } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import { useQuiz } from "@hooks";
 import { Question as QuestionType } from "@types";
 import TimerIcon from "src/assets/timer.svg";
@@ -8,6 +9,8 @@ import TimerIcon from "src/assets/timer.svg";
 interface Props {
   question: QuestionType;
 }
+
+const AnimatedVstack = motion(VStack);
 
 export const Question: FunctionComponent<Props> = ({ question }) => {
   const { lifetimeSeconds, text, options } = question;
@@ -48,7 +51,10 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
   );
 
   return (
-    <VStack
+    <AnimatedVstack
+      initial={{ opacity: 0, y: -200 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 200 }}
       p={10}
       gap={[5, 10]}
       shadow="dark-lg"
@@ -87,6 +93,6 @@ export const Question: FunctionComponent<Props> = ({ question }) => {
           </Flex>
         ))}
       </Flex>
-    </VStack>
+    </AnimatedVstack>
   );
 };
